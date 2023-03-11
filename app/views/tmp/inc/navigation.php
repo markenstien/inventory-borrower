@@ -42,6 +42,14 @@
             </a>
         </li>
         <?php endif?>
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
+        <li class="nav-item">
+            <a href="<?php echo _route('category:index')?>" class="nav-link">
+                <i class="link-icon" data-feather="message-square"></i>
+                <span class="link-title">Categories</span>
+            </a>
+        </li>
+        <?php endif?>
     </ul>
     </div>
 </nav>

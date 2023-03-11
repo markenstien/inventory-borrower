@@ -40,8 +40,6 @@
                 'options' => [
                     'label' => 'Category For',
                     'option_values' => [
-                        CategoryService::PETTY,
-                        CategoryService::COMMON_TRANSACTIONS,
                         CategoryService::ITEM
                     ]
                 ],
