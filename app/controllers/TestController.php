@@ -1,18 +1,12 @@
 <?php 
+	require LIBS.'/barcode_lib/'.'vendor/autoload.php'; 
 
 	class TestController extends Controller
-
 	{
-
 		public function index()
 		{
-			$comparison = '<';
-
-			if( 10 $comparison 10)
-			{
-				echo 'ok!';
-			}else{
-				echo 'not ok1';
-			}
+			$redColor = [255, 0, 0];
+			$generator = new Picqer\Barcode\BarcodeGeneratorHTML();
+			echo $generator->getBarcode('081231723897', $generator::TYPE_CODE_128);
 		}
 	}

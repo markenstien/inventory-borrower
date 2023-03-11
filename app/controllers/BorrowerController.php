@@ -17,7 +17,13 @@ use Services\StockService;
         }
 
         public function index() {
-            $this->data['borrows'] = $this->model->all(null, 'borrow.id desc');
+            if(isEqual(whoIs('user_type'), 'student')) {
+                $this->data['borrows'] = $this->model->all([
+                    'beneficiary_id' => whoIs('id')
+                ], 'borrow.id desc');
+            } else {
+                $this->data['borrows'] = $this->model->all(null, 'borrow.id desc');
+            }
             return $this->view('borrower/index', $this->data);
         }
         public function create() {
@@ -88,7 +94,12 @@ use Services\StockService;
             }
 
             $this->data['users'] = $this->userModel->getAll();
-            $this->data['items'] = $this->itemModel->all();
+            $this->data['items'] = $this->itemModel->all([
+                'stock.total_stock' => [
+                    'condition' => '>',
+                    'value' => 0
+                ]
+            ]);
             return $this->view('borrower/create', $this->data);    
         }
 

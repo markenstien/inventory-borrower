@@ -15,16 +15,29 @@ use function PHPSTORM_META\map;
                 <?php Flash::show()?>
                 <?php echo $form->start()?>
                     <div class="form-group">
-                        <?php echo $form->getCol('borrower');?>
-                        <?php echo wLinkDefault('#', 'Manual Search', [
-                            'id' => 'user_manual_search',
-                            'data-bs-toggle' => 'modal',
-                            'data-bs-target' => '#userManualSearchModal'
-                        ])?>
-                        
-                        <?php Form::hidden('borrower_id','', [
-                            'id' => 'borrowerId'
-                        ])?>
+                        <?php 
+                            if(isEqual(whoIs('user_type'), 'student')) 
+                            {
+                                echo $form->getCol('borrower', [
+                                    'value' => whoIs(['firstname' , 'lastname']),
+                                ]);
+                                
+                                Form::hidden('borrower_id', whoIs('id'), [
+                                    'id' => 'borrowerId'
+                                ]);
+                            } else {
+                                echo $form->getCol('borrower');
+                                echo wLinkDefault('#', 'Manual Search', [
+                                    'id' => 'user_manual_search',
+                                    'data-bs-toggle' => 'modal',
+                                    'data-bs-target' => '#userManualSearchModal'
+                                ]);
+
+                                Form::hidden('borrower_id','', [
+                                    'id' => 'borrowerId'
+                                ]);
+                            }
+                        ?>
                     </div>
 
                     <div class="form-group">

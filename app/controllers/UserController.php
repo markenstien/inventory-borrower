@@ -102,8 +102,12 @@
 			$borrows = $this->borrow->all([
 				'beneficiary_id' => $id
 			]);
+
 			$this->data['user'] = $user;
 			$this->data['is_admin'] = $this->is_admin;
+			if($user->user_code) {
+				$this->data['barcode'] = $this->_barCode->getBarcode($user->user_code, $this->_barCode::TYPE_CODE_128);
+			}
 
 			$number_of_days_after_deployment = null;
 			$number_of_days_remaining = null;

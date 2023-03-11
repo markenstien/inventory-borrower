@@ -1,12 +1,13 @@
 <?php
 	use Form\AttachmentForm;
 	use Form\FormCommon;
-
+	require LIBS.'/barcode_lib/'.'vendor/autoload.php'; 
 	load(['AttachmentForm','FormCommon'] , APPROOT.DS.'form');
 	class Controller
 	{	
 
 		protected $_attachmentForm = null;
+		protected $_barCode;
 
 		//temporary
 		public $is_admin = false;
@@ -26,6 +27,8 @@
 			$user = whoIs(); 
 			if($user && isEqual($user->user_type , 'admin'))
 				$this->is_admin = true;
+
+			$this->_barCode = new Picqer\Barcode\BarcodeGeneratorHTML();
 		}
 
 		public function model($model)

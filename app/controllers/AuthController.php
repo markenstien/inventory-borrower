@@ -40,7 +40,7 @@
 			$form = $this->_form;
 
 			$form->init([
-				'url' => _route('auth:login')
+				'url' => _route('borrow:index')
 			]);
 
 			$form->customSubmit('Login' , 'submit' , ['class' => 'btn btn-primary btn-sm']);

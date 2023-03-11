@@ -12,36 +12,36 @@
     <div class="sidebar-body">
     <ul class="nav">
         <li class="nav-item nav-category">Main</li>
-        <li class="nav-item">
-            <a href="<?php echo _route('dashboard:index')?>" class="nav-link">
-                <i class="link-icon" data-feather="box"></i>
-                <span class="link-title">Dashboard</span>
-            </a>
-        </li>
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
         <li class="nav-item">
             <a href="<?php echo _route('item:index')?>" class="nav-link">
                 <i class="link-icon" data-feather="message-square"></i>
                 <span class="link-title">Items</span>
             </a>
         </li>
+        <?php endif?>
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
         <li class="nav-item">
             <a href="<?php echo _route('stock:index')?>" class="nav-link">
                 <i class="link-icon" data-feather="message-square"></i>
                 <span class="link-title">Inventory</span>
             </a>
         </li>
+        <?php endif?>
         <li class="nav-item">
             <a href="<?php echo _route('borrow:index')?>" class="nav-link">
                 <i class="link-icon" data-feather="message-square"></i>
                 <span class="link-title">Borrow</span>
             </a>
         </li>
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
         <li class="nav-item">
             <a href="<?php echo _route('user:index')?>" class="nav-link">
                 <i class="link-icon" data-feather="message-square"></i>
                 <span class="link-title">User</span>
             </a>
         </li>
+        <?php endif?>
     </ul>
     </div>
 </nav>

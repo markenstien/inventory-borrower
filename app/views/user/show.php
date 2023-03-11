@@ -16,6 +16,10 @@
 					<div>
 						<label class="tx-11">User Identification</label>
 						<p><span class="badge bg-warning"><?php echo $user->user_identification?></span></p>
+
+						<?php if(isset($barcode)) :?>
+							<div class="mt-2 mb-2"><?php echo $barcode?></div>
+						<?php endif?>
 					</div>
 					
 					<div>

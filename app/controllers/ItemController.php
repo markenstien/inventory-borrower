@@ -42,13 +42,18 @@
         }
 
         public function show($id) {
-            $this->data['item'] = $this->model->get($id);
+            $item = $this->model->get($id);
+            $this->data['item'] = $item;
             $this->data['images'] = $this->model->getImages($id);
             $this->data['attachmentForm'] = $this->attachmentForm($id);
             $this->data['stocks'] = $this->stockModel->getProductLogs($id,[
                 'limit' => 5,
                 'order_by' => 'id desc'
             ]);
+
+            if($item->barcode) {
+                $this->data['barcodeimage'] = $this->_barCode->getBarcode($item->barcode, $this->_barCode::TYPE_CODE_128);
+            }
             return $this->view('item/show', $this->data);
         }
 

@@ -21,10 +21,17 @@
                                     <td>SKU : </td>
                                     <td><?php echo $item->sku?></td>
                                 </tr>
+                                <?php if(isset($barcodeimage)) : ?>
                                 <tr>
                                     <td>Barcode : </td>
-                                    <td><?php echo empty($item->barcode) ? 'N/A' : $item->barcode?></td>
+                                    <td><?php echo $barcodeimage?></td>
                                 </tr>
+                                <?php else:?>
+                                <tr>
+                                    <td>Barcode : </td>
+                                    <td>No Barcode</td>
+                                </tr>
+                                <?php endif?>
                                 <tr>
                                     <td>Category : </td>
                                     <td><?php echo $item->category_id?></td>
