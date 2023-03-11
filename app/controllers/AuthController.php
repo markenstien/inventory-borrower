@@ -31,16 +31,16 @@
 					return request()->return();
 				}else
 				{
-					Flash::set( "Welcome Back !" . auth('first_name'));
+					Flash::set( "Welcome Back !" . auth('firstname'));
 				}
 
-				return redirect('DashboardController');
+				return redirect(_route('borrow:index'));
 			}
 
 			$form = $this->_form;
 
 			$form->init([
-				'url' => _route('borrow:index')
+				'url' => _route('auth:login')
 			]);
 
 			$form->customSubmit('Login' , 'submit' , ['class' => 'btn btn-primary btn-sm']);

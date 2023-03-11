@@ -258,7 +258,7 @@
 
 			$auth = null;
 
-			while( is_null($auth) )
+			while(is_null($auth))
 			{
 				Session::set('auth' , $user);
 				$auth = Session::get('auth');
