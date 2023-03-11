@@ -10,6 +10,7 @@
             <div class="card-body">
                 <?php Flash::show()?>
                 <?php echo $form->start(['action' => _route('borrow:edit', $id)])?>
+                    
                     <div class="form-group">
                         <?php
                             Form::label('Borrower Name');
@@ -48,7 +49,7 @@
                             <?php echo $form->getCol('return_on_date');?>
                         </div>
                     </section>
-                    
+
                     <div class="form-group mt-2">
                         <?php Form::submit('', 'Save Borrow Data')?>
                     </div>

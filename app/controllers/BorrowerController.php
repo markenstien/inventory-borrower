@@ -114,9 +114,22 @@ use Services\StockService;
             $borrow = $this->model->get($id);
 
             if(isSubmitted()) {
-                $req = request()->inputs();
-                $this->model->createOrUpdate($req, $id);
-                Flash::set("Boroowed Item Edited");
+                $post = request()->posts();
+                $this->model->createOrUpdate($post, $id);
+
+                if(isset($post['return_date'])) {
+                    $borrow = $this->model->get($id);
+
+                    $response = $this->stockModel->createOrUpdate([
+                        'entry_type' => StockService::ENTRY_ADD,
+                        'entry_origin' => StockService::BORROW,
+                        'item_id' => $borrow->item_id,
+                        'quantity' => 1,
+                        'date' => today(),
+                        'remarks' => "Returned Borrowed Equipment"
+                    ]);
+                }
+                Flash::set("Borrowe Item Edited");
                 return redirect(_route('borrow:show', $id));
             }
             
