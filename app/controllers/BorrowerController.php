@@ -14,6 +14,7 @@ use Services\StockService;
             $this->userModel = model('UserModel');
             $this->stockModel = model('StockModel');
             $this->data['form'] = new BorrowForm();
+            _requireAuth();
         }
 
         public function index() {
