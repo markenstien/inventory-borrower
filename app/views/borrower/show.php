@@ -9,12 +9,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <h4>Borrow Details</h4>
-                    <span class="badge bg-info"><?php echo $borrow->status?></span>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr>
                                 <td>Reference</td>
                                 <td><?php echo $borrow->reference?></td>
+                            </tr>
+                            <tr>
+                                <td>Status</td>
+                                <td><span class="badge bg-info"><?php echo $borrow->status?></span></td>
                             </tr>
                             <tr>
                                 <td><?php echo $form->getLabel('borrow_date')?> : </td>
@@ -23,6 +26,10 @@
                             <tr>
                                 <td><?php echo $form->getLabel('borrow_time')?> :</td>
                                 <td><?php echo $borrow->borrow_time?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->getLabel('return_on_date')?></td>
+                                <td><?php echo $borrow->return_on_date?></td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="background-color: blue;color:#fff">Item Borrowed</td>
@@ -42,15 +49,21 @@
                         </table>
                     </div>
 
+                    <?php if(empty($borrow->return_date)) :?>
+                    <div>
+                        <a href="<?php echo _route('borrow:return-item', $borrow->id)?>" class="btn btn-primary btn-lg mt-3">Return Borrowed Equipment</a>
+                    </div>
+                    <?php endif?>
 
-                    <?php if(!empty($borrow->return_on_date)) :?>
+
+                    <?php if(!empty($borrow->return_date)) :?>
                     <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr>
                                 <td colspan="2" style="background-color: blue;color:#fff">Return Details</td>
                             </tr>
                             <tr>
-                                <td><?php echo $form->getLabel('return_on_date')?></td>
+                                <td><?php echo $form->getLabel('return_date')?></td>
                                 <td><?php echo $borrow->return_on_date?></td>
                             </tr>
                             <tr>

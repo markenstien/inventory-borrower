@@ -23,8 +23,8 @@
 			// $this->addName();
 
 			$this->addLabel();
-			$this->addSearchKey();
-			$this->addDescription();
+			// $this->addSearchKey();
+			// $this->addDescription();
 			$this->addGlobalId();
 			$this->addGlobalKey();
 			$this->addFileUpload();
@@ -50,7 +50,7 @@
 				'type' => 'text',
 				'name' => 'label',
 				'options' => [
-					'label' => 'File Label',
+					'label' => 'Display Name(Optional)',
 				],
 				'class' => 'form-control'
 			]);

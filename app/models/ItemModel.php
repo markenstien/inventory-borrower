@@ -24,6 +24,20 @@
             $_fillables = $this->getFillablesOnly($itemData);
             $item = $this->getItemByUniqueKey($itemData['sku'], $itemData['name']);
 
+
+            //validate barcode
+
+            if(isset($itemData['barcode']) && !empty($itemData['barcode'])) {
+                //get barcode
+                $itemWithBarcode = parent::single([
+                    'barcode' => trim($itemData['barcode'])
+                ]);
+
+                if($itemWithBarcode && ($itemWithBarcode->id != $id)) {
+                    $this->addError("Barcode *{$itemData['barcode']}* already exists");
+                    return false;
+                }
+            }
             if (!is_null($id)) {
                 if($item && ($item->id != $id)) {
                     $this->addError("SKU Or Name Already exists");

@@ -20,7 +20,8 @@
 			'created_at',
 			'created_by',
 			'user_type',
-			'profile'
+			'profile',
+			'user_code'
 		];
 
 
@@ -38,15 +39,17 @@
 			$fillable_datas = $this->getFillablesOnly($user_data);
 			$validated = $this->validate($fillable_datas, $id);
 
+			if(!$validated) {
+				return false;
+			}
 			if(!is_null($id))
 			{
 				//change password also
-				if( empty($fillable_datas['password']) )
+				if(empty($fillable_datas['password']))
 					unset($fillable_datas['password']);
+
+				$this->uploadProfile('profile' , $id);
 				$res = parent::update($fillable_datas , $id);
-				if( isset($user_data['profile']) ){
-					$this->uploadProfile('profile' , $id);
-				}
 				$user_id = $id;
 			}else
 			{
@@ -87,7 +90,7 @@
 
 		private function validate($user_data , $id = null)
 		{
-			if(isset($user_data['email']) && !empty($user_data['username']))
+			if(isset($user_data['email']) && !empty($user_data['email']))
 			{
 				$is_exist = $this->getByKey('email' , $user_data['email'])[0] ?? '';
 
@@ -107,12 +110,21 @@
 				}
 			}
 
-			if(isset($user_data['phone_number']) && !empty($user_data['username']))
+			if(isset($user_data['phone_number']) && !empty($user_data['phone_number']))
 			{
 				$is_exist = $this->getByKey('phone_number' , $user_data['phone_number'])[0] ?? '';
 
 				if( $is_exist && !isEqual($is_exist->id , $id) ){
 					$this->addError("Phonne Number {$user_data['phone_number']} already used");
+					return false;
+				}
+			}
+
+			if (isset($user_data['user_code']) && !empty($user_data['user_code'])) {
+				$is_exist = $this->getByKey('user_code' , $user_data['user_code'])[0] ?? '';
+
+				if( $is_exist && !isEqual($is_exist->id , $id) ){
+					$this->addError("Bar code *{$user_data['user_code']}* is already used by another user");
 					return false;
 				}
 			}
@@ -149,8 +161,6 @@
 				$this->addError(implode(',' , $upload['result']['err']));
 				return false;
 			}
-
-			//save to profile
 
 			$res = parent::update([
 				'profile' => GET_PATH_UPLOAD.DS.$upload['result']['name']

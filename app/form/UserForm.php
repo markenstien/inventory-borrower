@@ -17,18 +17,21 @@
 			$this->name = $name ?? 'form_user';
 
 			$this->initCreate();
+			$this->addUserCode();
 			/*personal details*/
 			$this->addFirstName();
 			$this->addLastName();
+			$this->addUserType();
+			$this->addUsername();
+			$this->addPassword();
+			
 			$this->addGender();
 			/*end*/
 			$this->addPhoneNumber();
 			$this->addEmail();
 			$this->addAddress();
 
-			$this->addUsername();
-			$this->addPassword();
-			$this->addUserType();
+			
 			$this->addProfile();
 			
 			$this->addSubmit('');
@@ -41,7 +44,23 @@
 				'enctype' => true
 			]);
 		}
-		
+
+		public function addUserCode() {
+			$this->add([
+				'type' => 'text',
+				'name' => 'user_code',
+				'class' => 'form-control',
+				'options' => [
+					'label' => 'Barcode'
+				],
+				'attributes' => [
+					'id' => 'user_code',
+					'placeholder' => 'focus this field and scan your barcode',
+					'autofocus' => true
+				]
+			]);
+		}
+
 		public function addFirstName()
 		{
 			$this->add([
@@ -75,6 +94,41 @@
 				'attributes' => [
 					'id' => 'lastname',
 					'placeholder' => 'Enter Last Name'
+				]
+			]);
+		}
+
+		public function addUsername()
+		{
+			$this->add([
+				'type' => 'text',
+				'name' => 'username',
+				'class' => 'form-control',
+				'required' => true,
+				'options' => [
+					'label' => 'Username',
+				],
+
+				'attributes' => [
+					'id' => 'username',
+					'placeholder' => 'Enter Username'
+				]
+			]);
+		}
+
+		public function addPassword()
+		{
+			$this->add([
+				'type' => 'password',
+				'name' => 'password',
+				'class' => 'form-control',
+				'required' => true,
+				'options' => [
+					'label' => 'Password',
+				],
+
+				'attributes' => [
+					'id' => 'password'
 				]
 			]);
 		}
@@ -149,48 +203,13 @@
 			]);
 		}
 
-		public function addUsername()
-		{
-			$this->add([
-				'type' => 'text',
-				'name' => 'username',
-				'class' => 'form-control',
-				'required' => '',
-				'options' => [
-					'label' => 'Username',
-				],
-
-				'attributes' => [
-					'id' => 'username',
-					'placeholder' => 'Enter Username'
-				]
-			]);
-		}
-
-		public function addPassword()
-		{
-			$this->add([
-				'type' => 'password',
-				'name' => 'password',
-				'class' => 'form-control',
-				'required' => '',
-				'options' => [
-					'label' => 'Password',
-				],
-
-				'attributes' => [
-					'id' => 'password'
-				]
-			]);
-		}
-
 		public function addUserType()
 		{
 			$this->add([
 				'type' => 'select',
 				'name' => 'user_type',
 				'class' => 'form-control',
-				'required' => '',
+				'required' => true,
 				'options' => [
 					'label' => 'User Type',
 					'option_values' => [

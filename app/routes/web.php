@@ -28,9 +28,9 @@
 		'create' => $controller.'/create',
 		'delete' => $controller.'/destroy',
 		'show'   => $controller.'/show',
-		'sendCredential' => $controller.'/sendCredential'
+		'sendCredential' => $controller.'/sendCredential',
+		'return-item' => $controller.'/returnItem'
 	];
-
 
 	$controller = '/StockController';
 	$routes['stock'] = [

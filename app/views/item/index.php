@@ -2,11 +2,11 @@
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Items</h4>
-            <?php echo btnCreate(_route('item:create'))?>
+            <?php echo wLinkDefault(_route('item:create'), 'Add New Item')?>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered dataTable">
+                <table class="table dataTable">
                     <thead>
                         <th>#</th>
                         <th>SKU</th>

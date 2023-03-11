@@ -18,6 +18,7 @@
                 'action' => _route('borrow:create')
             ]);
             $this->addBorrower();
+            $this->adddItemBarCodeSearch();
             $this->addItem();
             $this->addBorrowDate();
             $this->addBorrowTime();
@@ -38,7 +39,28 @@
                 'required' => true,
                 'class' => 'form-control',
                 'options' => [
-                    'label' => 'Beneficiary'
+                    'label' => 'Borrower'
+                ],
+                'attributes' => [
+                    'placeholder' => 'Focus this field scan user barcode',
+                    'autofocus' => true,
+                    'id' => 'borrower'
+                ]
+            ]);
+        }
+
+        public function adddItemBarCodeSearch() {
+            $this->add([
+                'name' => 'item_barcode_search',
+                'type' => 'text',
+                'required' => true,
+                'class' => 'form-control',
+                'options' => [
+                    'label' => 'Item Barcode Search'
+                ],
+                'attributes' => [
+                    'placeholder' => 'Focus this field scan user barcode',
+                    'id' => 'itemBarSearch'
                 ]
             ]);
         }

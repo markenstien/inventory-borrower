@@ -3,14 +3,14 @@
 	<div class="card">
 		<div class="card-header">
 			<h4 class="card-title">Users</h4>
-			<?php echo btnCreate(_route('user:create'))?>
+			<?php echo wLinkDefault(_route('user:create'), 'Add new User')?>
 		</div>
 
 		<div class="card-body">
 			<?php Flash::show()?>
 
 			<div class="table-responsive" style="min-height: 30vh;">
-				<table class="table table-bordered dataTable">
+				<table class="table dataTable">
 					<thead>
 						<th>ID</th>
 						<th>Name</th>

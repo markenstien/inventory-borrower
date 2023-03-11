@@ -23,15 +23,9 @@
         public function createOrUpdate($data, $id = null) {
             $_fillables = parent::getFillablesOnly($data);
             $retval = false;
-
-            $borrower = $this->searchBorrower($data['borrower']);
-
-            if(!$borrower) {
-                $this->addError("Borrower not found!");
-                return false;
-            }
             
-            $_fillables['beneficiary_id'] = $borrower->id;
+            $_fillables['beneficiary_id'] = $data['borrower_id'];
+            $item_id['beneficiary_id'] = $data['item_id'];
             $_fillables['staff_id'] = whoIs('id');
 
             if (is_null($id)) {
@@ -43,32 +37,14 @@
             return $retval;
         }
 
-        private function searchBorrower($borrower) {
-            $this->userModel = model('UserModel');
-
-            return $this->userModel->single([
-                'user_key_code' => [
-                    'condition' => 'equal',
-                    'value' => $borrower,
-                    'concatinator' => 'OR'
-                ],
-
-                'user_identification' => [
-                    'condition' => 'equal',
-                    'value' => $borrower,
-                    'concatinator' => 'OR'
-                ],
-            ]);
-        }
-
-        public function all($where = null , $order_by = null , $limit = null) {
+        public function all($where = null , $order = null , $limit = null) {
 
             if(!is_null($where)) {
                 $where = " WHERE ". parent::conditionConvert($where);
             } 
 
-            if(!is_null($order_by)) {
-                $order = " ORDER BY {$order_by}";
+            if(!is_null($order)) {
+                $order = " ORDER BY {$order}";
             }
 
             if(!is_null($limit)) {
@@ -85,7 +61,7 @@
                 ON item.id = borrow.item_id
                 LEFT JOIN users as user 
                 ON user.id = borrow.beneficiary_id
-                {$where} {$order_by} {$limit}"
+                {$where} {$order} {$limit}"
             );
 
             return $this->db->resultSet();

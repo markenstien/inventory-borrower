@@ -11,13 +11,17 @@
                 <?php Flash::show()?>
                 <?php echo $form->start(['action' => _route('borrow:edit', $id)])?>
                     <div class="form-group">
-                        <?php echo $form->getCol('borrower', [
-                            'value' => $borrow->user_identification
-                        ]);?>
+                        <?php
+                            Form::label('Borrower Name');
+                            Form::text('', $borrow->borrower_name, ['class' => 'form-control', 'readonly' => true]);
+                        ?>
                     </div>
 
                     <div class="form-group">
-                        <?php echo $form->getCol('item_id');?>
+                        <?php
+                            Form::label('Borrowed Item');
+                            Form::text('', $borrow->item_name, ['class' => 'form-control', 'readonly' => true]);
+                        ?>
                     </div>
 
                     <div class="form-group">
@@ -44,25 +48,7 @@
                             <?php echo $form->getCol('return_on_date');?>
                         </div>
                     </section>
-
-                    <!-- if return is already set -->
-                    <section class="mt-2" style="border: 1px solid #000;padding:10px">
-                        <h5>Return Details</h5>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6"><?php echo $form->getCol('return_date');?></div>
-                                <div class="col-md-6"><?php echo $form->getCol('return_time');?></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6"><?php echo $form->getCol('return_state');?></div>
-                                <div class="col-md-6"><?php echo $form->getCol('return_remark');?></div>
-                            </div>
-                        </div>
-                    </section>
-
+                    
                     <div class="form-group mt-2">
                         <?php Form::submit('', 'Save Borrow Data')?>
                     </div>

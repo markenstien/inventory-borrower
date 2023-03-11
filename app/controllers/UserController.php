@@ -42,12 +42,6 @@
 				}
 
 				Flash::set('User Record Created');
-				if( isEqual($post['user_type'] , 'patient') )
-				{
-					Flash::set('Patient Record Created');
-					return redirect(_route('patient-record:create' , null , ['user_id' => $user_id]));
-				}
-
 				return redirect( _route('user:show' , $user_id , ['user_id' => $user_id]) );
 			}
 			$this->data['user_form'] = new UserForm('userForm');
@@ -59,7 +53,6 @@
 		{
 			if(isSubmitted()) {
 				$post = request()->posts();
-				$post['profile'] = 'profile';
 				$res = $this->model->update($post , $post['id']);
 
 				if($res) {

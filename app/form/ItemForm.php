@@ -14,15 +14,13 @@
             parent::__construct();
             $this->name = empty($name) ? 'Item Form' : $name;
             
+            $this->addBarcode();
             $this->addName();
             $this->addSku();
-            $this->addBarcode();
-            $this->addCostPrice();
-            $this->addSellPrice();
-            $this->addMinStock();
-            $this->addMaxStock();
+            // $this->addMinStock();
+            // $this->addMaxStock();
             $this->addCategory();
-            $this->addVariant();
+            // $this->addVariant();
             $this->addRemarks();
 
             $this->customSubmit('Save Item');
@@ -59,7 +57,11 @@
                 'options' => [
                     'label' => 'Barcode'
                 ],
-                'class' => 'form-control'
+                'class' => 'form-control',
+                'required' => true,
+                'attributes' => [
+                    'placeholder' => 'focus this field and scan your barcode'
+                ]
             ]);
         }
 

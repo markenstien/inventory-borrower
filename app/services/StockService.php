@@ -4,6 +4,10 @@
     class StockService {
         const SALES = 'SALES';
         const PURCHASE_ORDER = 'PURCHASE_ORDER';
+
+        const ENTRY_ORIGIN = 'PURCHASE_ITEM';
+        const ENTRY_ORIGIN_DEFECTIVE_ITEM = 'DEFECTIVE_ITEM';
+
         const BORROW = 'BORROW';
         const RETURN_ITEM = 'RETURN_ITEM';
         const ENTRY_DEDUCT = 'DEDUCT';

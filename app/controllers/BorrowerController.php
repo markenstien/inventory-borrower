@@ -10,35 +10,85 @@ use Services\StockService;
         {
             parent::__construct();
             $this->model = model('BorrowerModel');
+            $this->itemModel = model('ItemModel');
+            $this->userModel = model('UserModel');
             $this->stockModel = model('StockModel');
             $this->data['form'] = new BorrowForm();
         }
 
         public function index() {
-            $this->data['borrows'] = $this->model->all();
+            $this->data['borrows'] = $this->model->all(null, 'borrow.id desc');
             return $this->view('borrower/index', $this->data);
         }
-
         public function create() {
             $req = request()->inputs();
+            $errors = [];
 
             if (isSubmitted()) {
-                $borrowId = $this->model->createOrUpdate($req);
+                $post = request()->posts();
+                //search for borrower
+
+                if(empty($post['borrower_id'])) {
+                    $borrow_id = $this->userModel->single([
+                        'user_key_code' => [
+                            'condition' => 'equal',
+                            'value' => $post['borrower'],
+                            'concatinator' => 'OR'
+                        ],
+        
+                        'user_identification' => [
+                            'condition' => 'equal',
+                            'value' => $post['borrower'],
+                            'concatinator' => 'OR'
+                        ],
+                        //barcode
+                        'user_code' => [
+                            'condition' => 'equal',
+                            'value' => $post['borrower'],
+                            'concatinator' => 'OR'
+                        ],
+                    ]);
+
+                    if(!$borrow_id) {
+                        $errors[] = 'Borrower not found';
+                    }
+                }
+
+                if(empty($post['item_id'])) {
+                    $item = $this->itemModel->single([
+                        'barcode' => $post['item_barcode_search']
+                    ]);
+
+                    if(!$item) {
+                        $errors[] = " Item not found";
+                    }
+                }
+
+                if(!empty($errors)) {
+                    Flash::set(implode(',', $errors) , 'danger');
+                    return request()->return();
+                }
+
+                $borrowId = $this->model->createOrUpdate($post);
                 if(!$borrowId) {
                     Flash::set($this->model->getErrorString(), 'danger');
                     return request()->return();
                 } else {
-                    $this->stockModel->createOrUpdate([
+                    $response = $this->stockModel->createOrUpdate([
                         'entry_type' => StockService::ENTRY_DEDUCT,
                         'entry_origin' => StockService::BORROW,
-                        'item_id' => $req['item_id'],
+                        'item_id' => $post['item_id'],
                         'quantity' => 1,
                         'date' => today(),
-                        'remarks' => $req['borrow_remarks']
+                        'remarks' => $post['borrow_remark']
                     ]);
                     Flash::set("Borrower Saved!");
+                    return redirect(_route('borrow:show', $borrowId));
                 }
             }
+
+            $this->data['users'] = $this->userModel->getAll();
+            $this->data['items'] = $this->itemModel->all();
             return $this->view('borrower/create', $this->data);    
         }
 
@@ -66,5 +116,17 @@ use Services\StockService;
             $this->data['id'] = $id;
 
             return $this->view('borrower/edit', $this->data);
+        }
+
+        public function returnItem($id) {
+            $borrow = $this->model->get($id);
+            $this->data['form']->setValueObject($borrow);
+            $this->data['form']->init([
+                'action' => _route('borrow:edit', $id)
+            ]);
+
+            $this->data['borrow'] = $borrow;
+            $this->data['id'] = $id;
+            return $this->view('borrower/return_page', $this->data);
         }
     }

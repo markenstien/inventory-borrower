@@ -27,3 +27,8 @@ alter table users
 
 alter table users 
   add column user_key_code text unique;
+
+
+
+  alter table users 
+    add column user_code varchar(100);
