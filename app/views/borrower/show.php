@@ -6,6 +6,14 @@
         </div>
         
         <div class="card-body">
+
+            <?php if(isEqual($borrow->status,'cancelled')) :?>
+                <?php echo wLinkDefault(_route('borrow:delete', $borrow->id, [
+                    'route' => seal(_route('borrow:index'))
+                ]), 'Delete Cancelled Record', [
+                    'class' => 'btn btn-danger btn-lg form-verify'
+                ])?>
+            <?php endif?>
             <div class="row">
                 <div class="col-md-6">
                     <h4>Borrow Details</h4>

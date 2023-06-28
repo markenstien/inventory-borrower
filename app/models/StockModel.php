@@ -47,7 +47,7 @@
         public function getProductLogs($itemId,$params = []) {
             
             $params['condition']['item_id'] = $itemId;
-            return parent::all($params['condition'], $params['order_by'] ?? 'id desc', $params['limit'] ?? null);
+            return parent::all($params['condition'], $params['order_by'] ?? 'id asc', $params['limit'] ?? null);
         }
 
         public function getItemStock($itemid) {

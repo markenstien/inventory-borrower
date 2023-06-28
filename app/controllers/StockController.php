@@ -45,9 +45,11 @@
             $request = request()->inputs();
 
             if (isset($request['item_id'])) {
-                $logs = $this->model->getProductLogs($request['item_id']);
+                $logs = $this->model->getProductLogs($request['item_id'], [
+                    'order_by' => 'created_at desc'
+                ]);
             } else {
-                $logs = $this->model->all(null,'id desc');
+                $logs = $this->model->all(null,'stock.id desc');
             }
 
             $this->data['logs'] = $logs;

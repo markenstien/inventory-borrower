@@ -1,5 +1,7 @@
 <?php 
-
+    use Services\StockService;
+    load(['StockService'], SERVICES);
+    
     class BorrowerModel extends Model
     {
         public $table = 'borrowers';
@@ -23,16 +25,27 @@
         public function createOrUpdate($data, $id = null) {
             $_fillables = parent::getFillablesOnly($data);
             $retval = false;
-            
-            $_fillables['beneficiary_id'] = $data['borrower_id'];
-            $item_id['beneficiary_id'] = $data['item_id'];
-            $_fillables['staff_id'] = whoIs('id');
 
             if (is_null($id)) {
+                $_fillables['beneficiary_id'] = $data['borrower_id'];
+                $_fillables['staff_id'] = whoIs('id');
+
                 $_fillables['reference'] = referenceSeries(parent::lastId() + 1, 3, date('Ym').'-');
                 $retval= parent::store($_fillables);
             } else {
                 $retval = parent::update($_fillables, $id);
+
+                if(isEqual($_fillables['status'], 'cancelled')) {
+                    $this->stockModel = model('StockModel');
+                    $this->stockModel->createOrUpdate([
+                        'entry_type' => StockService::ENTRY_ADD,
+                        'entry_origin' => StockService::BORROW,
+                        'item_id' => $data['item_id'],
+                        'quantity' => 1,
+                        'date' => today(),
+                        'remarks' => "Borrowed Equipment Cancelled"
+                    ]);
+                }
             }
             return $retval;
         }

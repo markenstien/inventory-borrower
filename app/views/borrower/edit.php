@@ -10,7 +10,7 @@
             <div class="card-body">
                 <?php Flash::show()?>
                 <?php echo $form->start(['action' => _route('borrow:edit', $id)])?>
-                    
+                    <?php echo Form::hidden('item_id', $borrow->item_id)?>
                     <div class="form-group">
                         <?php
                             Form::label('Borrower Name');
