@@ -23,8 +23,7 @@
     }
     function get_token_random_char($length = 12 , $params = false)
     {
-        $bytes = random_bytes($length);
-
+        $bytes = random_bytes($length);   
     		if($params)
     			return strtoupper(substr(bin2hex($bytes), 0 , $length));
     		return substr(bin2hex($bytes), 0 , $length);

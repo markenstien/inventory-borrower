@@ -20,6 +20,8 @@
 			'created_at',
 			'created_by',
 			'user_type',
+			'course_id',
+			'year_lvl',
 			'profile',
 			'user_code'
 		];
@@ -27,10 +29,11 @@
 
 		public function get($id)
 		{
-			$user = parent::get($id);
-			if(!$user)
-				return false;
-			return $user;
+			return $this->getAll([
+				'where' => [
+					'user.id' => $id
+				]
+			])[0] ?? false;
 		}
 
 		public function save($user_data , $id = null)
@@ -94,7 +97,7 @@
 			{
 				$is_exist = $this->getByKey('email' , $user_data['email'])[0] ?? '';
 
-				if( $is_exist && !isEqual($is_exist->id , $id) ){
+				if($is_exist && !isEqual($is_exist->id , $id) ){
 					$this->addError("Email {$user_data['email']} already used");
 					return false;
 				}
@@ -209,7 +212,10 @@
 				$where = " WHERE ".$this->conditionConvert($params['where']);
 
 			$this->db->query(
-				"SELECT * FROM {$this->table}
+				"SELECT user.*, course, course_abbr 
+					FROM {$this->table} as user 
+					LEFT JOIN courses as course 
+					ON course.id = user.course_id
 					{$where} {$order}"
 			);
 

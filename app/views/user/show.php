@@ -10,34 +10,50 @@
 
 				<div class="card-body">
 					<h4>Personal Information</h4>
-					<div>
-						<img src="<?php echo $user->profile?>" style="width: 150px;">
-					</div>
-					<div>
-						<label class="tx-11">User Identification</label>
-						<p><span class="badge bg-warning"><?php echo $user->user_identification?></span></p>
+					<img src="<?php echo $user->profile?>" style="width: 100px;">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<tr>
+								<td>User Type</td>
+								<td><?php echo $user->user_type?></td>
+							</tr>
 
-						<?php if(isset($barcode)) :?>
-							<div class="mt-2 mb-2"><?php echo $barcode?></div>
-						<?php endif?>
-					</div>
-					
-					<div>
-						<label class="tx-11">Name</label>
-						<p><?php echo $user->lastname . ',' . $user->firstname?></p>
-					</div>
-					<div>
-						<label class="tx-11">Gender</label>
-						<p><?php echo $user->gender?></p>
-					</div>
-					<div>
-						<label class="tx-11">Email And Mobile Number</label>
-						<p><?php echo $user->email?></p>
-						<p><?php echo $user->phone?></p>
-					</div>
-					<div>
-						<label class="tx-11">Address</label>
-						<p><?php echo "$user->address"?></p>
+							<?php if(isEqual($user->user_type, 'STUDENT')) :?>
+								<tr>
+									<td>Course</td>
+									<td><?php echo $user->course?> (<?php echo $user->course_abbr?>)</td>
+								</tr>
+								<tr>
+									<td>Year level</td>
+									<td><?php echo $user->year_lvl?></td>
+								</tr>
+							<?php endif?>
+
+							<tr>
+								<td>User Identification</td>
+								<td><?php echo $user->user_identification?></td>
+							</tr>
+							<tr>
+								<td>Name</td>
+								<td><?php echo $user->lastname . ',' . $user->firstname?></td>
+							</tr>
+							<tr>
+								<td>Gender</td>
+								<td><?php echo $user->gender?></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><?php echo $user->email?></td>
+							</tr>
+							<tr>
+								<td>Mobile Number</td>
+								<td><?php echo $user->phone?></td>
+							</tr>
+							<tr>
+								<td>Address</td>
+								<td><?php echo $user->address?></td>
+							</tr>
+						</table>
 					</div>
 					<hr>
 					<?php if($is_admin && !isEqual($user->user_type , 'admin')) :?>

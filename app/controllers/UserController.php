@@ -1,6 +1,10 @@
 <?php 
 	load(['UserForm'] , APPROOT.DS.'form');
+	load(['UserService'] , SERVICES);
+
 	use Form\UserForm;
+	use Services\UserService;
+
 	class UserController extends Controller
 	{
 
@@ -33,6 +37,9 @@
 
 		public function create()
 		{
+			$req = request()->inputs();
+			$userType = $req['user_type'] ?? 'STUDENT';
+
 			if(isSubmitted()) {
 				$post = request()->posts();
 				$user_id = $this->model->create($post , 'profile');
@@ -46,7 +53,14 @@
 			}
 			$this->data['user_form'] = new UserForm('userForm');
 
-			return $this->view('user/create' , $this->data);
+			if(isEqual($userType,'STUDENT')) {
+				$this->data['user_form']->setValue('user_type', UserService::STUDENT);
+				return $this->view('user/create_student', $this->data);
+			} else {
+				$this->data['user_form']->setValue('user_type', UserService::STAFF);
+				return $this->view('user/create_staff' , $this->data);
+			}
+			
 		}
 
 		public function edit($id)
@@ -86,6 +100,8 @@
 
 			if(!isEqual(whoIs('user_type'), 'admin'))
 				$this->data['user_form']->remove('user_type');
+
+			$this->data['user'] = $user;
 
 			return $this->view('user/edit' , $this->data);
 		}

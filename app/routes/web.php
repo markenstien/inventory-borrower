@@ -223,5 +223,14 @@
 		'respond'   => '/FormController'.'/respond'
 	];
 
+	$controller = '/CourseController';
+	$routes['course'] = [
+		'index' => $controller.'/index',
+		'edit' => $controller.'/edit',
+		'create' => $controller.'/create',
+		'delete' => $controller.'/destroy',
+		'send'   => $controller.'/send'
+	];
+
 	return $routes;
 ?>

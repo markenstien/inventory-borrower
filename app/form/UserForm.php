@@ -10,10 +10,15 @@
 	class UserForm extends Form
 	{
 
+		private $courseModel = null;
+
 		public function __construct( $name = null)
 		{
 			parent::__construct();
 
+			if(is_null($this->courseModel)) {
+				$this->courseModel = model('CourseModel');
+			}
 			$this->name = $name ?? 'form_user';
 
 			$this->initCreate();
@@ -26,6 +31,9 @@
 			$this->addPassword();
 			
 			$this->addGender();
+			$this->addCourse();
+			$this->addYearLevel();
+
 			/*end*/
 			$this->addPhoneNumber();
 			$this->addEmail();
@@ -206,20 +214,10 @@
 		public function addUserType()
 		{
 			$this->add([
-				'type' => 'select',
+				'type' => 'hidden',
 				'name' => 'user_type',
 				'class' => 'form-control',
-				'required' => true,
-				'options' => [
-					'label' => 'User Type',
-					'option_values' => [
-						UserService::STAFF,
-						UserService::STUDENT,
-					]
-				],
-				'attributes' => [
-					'id' => 'userType'
-				]
+				'required' => true
 			]);
 		}
 
@@ -235,6 +233,40 @@
 
 				'attributes' => [
 					'id' => 'profile'
+				]
+			]);
+		}
+
+		public function addCourse() {
+			$courses = $this->courseModel->all(null, 'course_abbr asc');
+			$coursesArray = arr_layout_keypair($courses, ['id', 'course_abbr@course']);
+
+			$this->add([
+				'type' => 'select',
+				'name' => 'course_id',
+				'class' => 'form-control',
+				'required' => true,
+				'options' => [
+					'label' => 'Course',
+					'option_values' => $coursesArray
+				]
+			]);
+		}
+
+		public function addYearLevel() {
+			$this->add([
+				'type' => 'select',
+				'name' => 'year_lvl',
+				'class' => 'form-control',
+				'required' => true,
+				'options' => [
+					'label' => 'Year Level',
+					'option_values' => [
+						'1st',
+						'2nd',
+						'3rd',
+						'4th',
+					]
 				]
 			]);
 		}

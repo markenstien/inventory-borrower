@@ -3,7 +3,8 @@
 	<div class="card">
 		<div class="card-header">
 			<h4 class="card-title">Users</h4>
-			<?php echo wLinkDefault(_route('user:create'), 'Add new User')?>
+			<?php echo wLinkDefault(_route('user:create', null, ['user_type' => 'STUDENT']), 'Add Student')?>
+			<?php echo wLinkDefault(_route('user:create', null, ['user_type' => 'STAFF']), 'Add Staff')?>
 		</div>
 
 		<div class="card-body">

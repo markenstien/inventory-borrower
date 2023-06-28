@@ -29,13 +29,14 @@
 	define('VIEWS' , APPROOT.DS.'views');
 
 	define('SERVICES' , APPROOT.DS.'services');
+    define('FORM' , APPROOT.DS.'form');
     ##########################################################################################
 
     /**
      * SYSTEM MODES
      * UP(UP AND RUNNING) , DOWN(MAINTENANCE) , DEV(DEVELOPMENT TEST DABATASE) , LOCAL (LOCAL MODE)
      */
-    $system['mode']  = 'up';
+    $system['mode']  = 'local';
 
     /**
      * SYSTEM SITE NAME

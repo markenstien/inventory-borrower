@@ -53,14 +53,18 @@
 
             $this->db->query(
                 "SELECT borrow.*, item.name as item_name,
+                    item.category_id as category_id,
                     concat(user.firstname, ' ',user.lastname) as borrower_name,
-                    user.user_identification as user_identification
+                    user.user_identification as user_identification,
+                    course, course_abbr, course_id, year_lvl
                     
                 FROM {$this->table} as borrow
-                LEFT JOIN items as item 
-                ON item.id = borrow.item_id
-                LEFT JOIN users as user 
-                ON user.id = borrow.beneficiary_id
+                    LEFT JOIN items as item 
+                        ON item.id = borrow.item_id
+                    LEFT JOIN users as user 
+                        ON user.id = borrow.beneficiary_id
+                    LEFT JOIN courses as course 
+                        ON course.id = user.course_id
                 {$where} {$order} {$limit}"
             );
 

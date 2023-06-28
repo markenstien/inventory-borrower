@@ -20,6 +20,14 @@
             </a>
         </li>
         <?php endif?>
+
+        <li class="nav-item">
+            <a href="<?php echo _route('course:index')?>" class="nav-link">
+                <i class="link-icon" data-feather="message-square"></i>
+                <span class="link-title">Courses</span>
+            </a>
+        </li>
+
         <?php if(!isEqual(whoIs('user_type'),'student')):?>
         <li class="nav-item">
             <a href="<?php echo _route('stock:index')?>" class="nav-link">
@@ -50,6 +58,12 @@
             </a>
         </li>
         <?php endif?>
+        <li class="nav-item">
+            <a href="<?php echo _route('report:index')?>" class="nav-link">
+                <i class="link-icon" data-feather="message-square"></i>
+                <span class="link-title">Reports</span>
+            </a>
+        </li>
     </ul>
     </div>
 </nav>
