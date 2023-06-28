@@ -13,20 +13,22 @@
     <ul class="nav">
         <li class="nav-item nav-category">Main</li>
         <?php if(!isEqual(whoIs('user_type'),'student')):?>
-        <li class="nav-item">
-            <a href="<?php echo _route('item:index')?>" class="nav-link">
-                <i class="link-icon" data-feather="message-square"></i>
-                <span class="link-title">Items</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a href="<?php echo _route('item:index')?>" class="nav-link">
+                    <i class="link-icon" data-feather="message-square"></i>
+                    <span class="link-title">Items</span>
+                </a>
+            </li>
         <?php endif?>
 
-        <li class="nav-item">
-            <a href="<?php echo _route('course:index')?>" class="nav-link">
-                <i class="link-icon" data-feather="message-square"></i>
-                <span class="link-title">Courses</span>
-            </a>
-        </li>
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
+            <li class="nav-item">
+                <a href="<?php echo _route('course:index')?>" class="nav-link">
+                    <i class="link-icon" data-feather="message-square"></i>
+                    <span class="link-title">Courses</span>
+                </a>
+            </li>
+        <?php endif?>
 
         <?php if(!isEqual(whoIs('user_type'),'student')):?>
         <li class="nav-item">
@@ -58,12 +60,15 @@
             </a>
         </li>
         <?php endif?>
-        <li class="nav-item">
-            <a href="<?php echo _route('report:index')?>" class="nav-link">
-                <i class="link-icon" data-feather="message-square"></i>
-                <span class="link-title">Reports</span>
-            </a>
-        </li>
+
+        <?php if(!isEqual(whoIs('user_type'),'student')):?>
+            <li class="nav-item">
+                <a href="<?php echo _route('report:index')?>" class="nav-link">
+                    <i class="link-icon" data-feather="message-square"></i>
+                    <span class="link-title">Reports</span>
+                </a>
+            </li>
+        <?php endif?>
     </ul>
     </div>
 </nav>
