@@ -22,7 +22,7 @@
                                 <td><?php echo ++$key?></td>
                                 <td><?php echo $row->sku?></td>
                                 <td><?php echo $row->name?></td>
-                                <td><?php echo $row->category_id?></td>
+                                <td><?php echo $row->category_name?></td>
                                 <td><?php echo $row->total_stock?></td>
                                 <td>
                                     <?php 
