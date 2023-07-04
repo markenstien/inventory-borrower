@@ -200,7 +200,7 @@
                 'options' => [
                     'label' => 'Borrowing Status',
                     'option_values' => [
-                        'pending','on-going','returned','cancelled'
+                        'pending','on-going','returned','cancelled','completed'
                     ]
                 ],
                 'required' => true,

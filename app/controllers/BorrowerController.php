@@ -58,6 +58,8 @@ use Services\StockService;
 
                     if(!$borrow_id) {
                         $errors[] = 'Borrower not found';
+                    }else{
+                        $post['borrower_id'] = $borrow_id->id;
                     }
                 }
 
@@ -68,6 +70,8 @@ use Services\StockService;
 
                     if(!$item) {
                         $errors[] = " Item not found";
+                    }else{
+                        $post['item_id'] = $item->id;
                     }
                 }
 
@@ -144,6 +148,13 @@ use Services\StockService;
         }
 
         public function returnItem($id) {
+            if(isSubmitted()) {
+                $post = request()->posts();
+                $post['status'] = 'completed';
+                $this->model->update($post, $id);
+
+                return redirect(_route('borrow:show', $id));
+            }
             $borrow = $this->model->get($id);
             $this->data['form']->setValueObject($borrow);
             $this->data['form']->init([

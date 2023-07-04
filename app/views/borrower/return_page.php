@@ -6,7 +6,7 @@
             <?php echo wLinkDefault(_route('borrow:show', $id), 'Back to view')?>
         </div>
         <div class="card-body">
-            <?php echo $form->start(['action' => _route('borrow:edit', $id)])?>
+            <?php echo $form->start(['action' => _route('borrow:return-item', $id)])?>
                 <!-- if return is already set -->
             <section class="mt-2" style="border: 1px solid #000;padding:10px">
                 <h5>Return Details</h5>

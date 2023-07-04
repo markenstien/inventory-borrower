@@ -19,6 +19,8 @@
 				<?php echo $user_form->getRow('email')?>
 				<?php echo $user_form->getRow('address')?>
 				<?php echo $user_form->getRow('profile')?>
+
+				<?php Form::submit('', 'Add Staff')?>
 			<?php echo $user_form->end() ?>
 		</div>
 	</div>
